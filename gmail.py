@@ -46,7 +46,7 @@ class GmailConnection:
 
 
 if __name__ == "__main__":
-	g = GmailConnection('lukas.zorich@gmail.com', 'udechile')
+	g = GmailConnection(gmail, password)
 	
 	n = g.getNewMails('https://mail.google.com/mail/feed/atom')
 	if int(n) > 0:

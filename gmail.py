@@ -4,6 +4,7 @@ from gi.repository import AppIndicator3 as appindicator
 import httplib2
 import xml.etree.ElementTree as etree
 import webbrowser
+import sys
 
 class GmailConnection:
 	def __init__(self, username, password):
@@ -18,8 +19,10 @@ class GmailConnection:
 		fullcount = root.find('{http://purl.org/atom/ns#}fullcount')
 		return fullcount.text
 
-	def openbrowser(self):
+	def openbrowser(self, menu_item, menu):
 		webbrowser.open('https://mail.google.com/mail/')
+		#self.quit()
+		Gtk.main_quit()
 	
 	def notify(self, n):
 		ind = appindicator.Indicator.new("example-simple-client", "indicator-messages", appindicator.IndicatorCategory.APPLICATION_STATUS) 
@@ -32,11 +35,13 @@ class GmailConnection:
 		menu_item = Gtk.MenuItem(s)
 		menu.append(menu_item)
 		
-		#menu_item.connect("activate", self.openbrowser(), s)
+		menu_item.connect("activate", self.openbrowser, menu)
 		menu_item.show()
 		
 		ind.set_menu(menu)
 		Gtk.main()
+	def quit(self):
+		sys.exit(0)
 
 
 
